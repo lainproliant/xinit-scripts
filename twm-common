@@ -1,0 +1,69 @@
+#!/bin/bash
+#-------------------------------------------------------------------
+# X initialization common to all TWMs and other desktop-less WMs.
+#-------------------------------------------------------------------
+
+# Restore the desktop wallpaper
+bash ~/.dotfiles/xinit/util/restore-desktop
+
+# Make left_ptr the default cursor.
+xsetroot -cursor_name left_ptr
+
+# Setup synaptic touchpads
+syndaemon PalmDetect=1 PalmMinWidth=5 -i 0.60 &
+synclient ClickTime=100
+# higher sensitivity
+synclient FingerLow=9 FingerHigh=12
+# 2 fingers scroll
+synclient VertTwoFingerScroll=1 HorizTwoFingerScroll=1
+# enable tap to click (3 fingers for middle click, 2 fingers for right click)
+synclient TapButton1=1 TapButton2=3 TapButton3=2
+# faster tap and double tap
+synclient FastTaps=1 MaxDoubleTapTime=100
+# continue dragging movement when reaching the edge of the touchpad
+synclient EdgeMotionMinZ=30 EdgeMotionMaxZ=40 EdgeMotionMinSpeed=100 EdgeMotionMaxSpeed=400
+
+# Fuck Capslock
+setxkbmap -option caps:none
+
+# Hide the mouse cursor when it is not needed.
+unclutter &
+
+# Fix the display layout.
+fixdisplay
+
+# Adjust mouse sensitivity
+xset mouse 1 1
+
+# Merge .Xdefaults into xrdb
+xrdb -merge ~/.Xdefaults
+
+# Run the X compositor
+xcompmgr &
+
+# Disable DPMS and screen blanking.
+xset s off -dpms
+
+# Set an idle timer to lock the screen
+#bash -c 'sleep 5; xautolock -time 1 -locker "/home/lainproliant/.util/lock"' &
+
+# Start notifyd
+systemctl --user start xfce4-notifyd
+
+# Start blueman-applet
+blueman-applet &
+
+# Start conky
+sh ~/.conky/conky-startup.sh &
+
+# Start guake.
+guake --hide &
+
+# Ignore shutdown/lid/sleep if nvidia card is enabled.
+systemd-inhibit --what=handle-lid-switch  ~/.util/nvidia-inhibit &
+
+# Get Pulseaudio to enable beeps
+if [[ -n $LAIN_SOUNDS ]]; then
+    pactl upload-sample ~/.sounds/smw_yoshi_tongue.wav x11-bell
+    pactl load-module module-x11-bell sample=x11-bell display=$DISPLAY
+fi

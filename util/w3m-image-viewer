@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ "$@" = "-test" ]]
+then exit
+elif [[ -n "$DISPLAY" ]]
+then feh "$@"
+else fim "$@"
+fi
