@@ -67,3 +67,7 @@ if [[ -n $LAIN_SOUNDS ]]; then
     pactl upload-sample ~/.sounds/smw_yoshi_tongue.wav x11-bell
     pactl load-module module-x11-bell sample=x11-bell display=$DISPLAY
 fi
+
+# Automatically start discord because I forget to start it and Jenna wants to
+# talk to me sometimes.
+#~/.util/discord-sux &
