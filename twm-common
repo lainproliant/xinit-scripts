@@ -60,7 +60,7 @@ sh ~/.conky/conky-startup.sh &
 guake --hide &
 
 # Ignore shutdown/lid/sleep if nvidia card is enabled.
-systemd-inhibit --what=handle-lid-switch  ~/.util/nvidia-inhibit &
+#systemd-inhibit --what=handle-lid-switch  ~/.util/nvidia-inhibit &
 
 # Get Pulseaudio to enable beeps
 if [[ -n $LAIN_SOUNDS ]]; then
