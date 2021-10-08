@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------
 
 # Restore the desktop wallpaper
-bash ~/.dotfiles/xinit/util/restore-desktop
+bash $HOME/.dotfiles/xinit/util/restore-desktop
 
 # Make left_ptr the default cursor.
 xsetroot -cursor_name left_ptr
@@ -36,7 +36,7 @@ fixdisplay
 xset mouse 1 1
 
 # Merge .Xdefaults into xrdb
-xrdb -merge ~/.Xdefaults
+xrdb -merge $HOME/.Xdefaults
 
 # Run the X compositor
 xcompmgr &
@@ -54,20 +54,19 @@ systemctl --user start xfce4-notifyd
 blueman-applet &
 
 # Start conky
-sh ~/.conky/conky-startup.sh &
+bash $HOME/.conky/conky-startup.sh &
 
 # Start guake.
 guake --hide &
 
 # Ignore shutdown/lid/sleep if nvidia card is enabled.
-#systemd-inhibit --what=handle-lid-switch  ~/.util/nvidia-inhibit &
+#systemd-inhibit --what=handle-lid-switch  $HOME/.util/nvidia-inhibit &
 
 # Get Pulseaudio to enable beeps
 if [[ -n $LAIN_SOUNDS ]]; then
-    pactl upload-sample ~/.sounds/smw_yoshi_tongue.wav x11-bell
+    pactl upload-sample $HOME/.sounds/smw_yoshi_tongue.wav x11-bell
     pactl load-module module-x11-bell sample=x11-bell display=$DISPLAY
 fi
 
-# Automatically start discord because I forget to start it and Jenna wants to
-# talk to me sometimes.
-#~/.util/discord-sux &
+# Set the M570/M575 trackball sensitivity to my liking.
+bash $HOME/.dotfiles/xinit/m570
