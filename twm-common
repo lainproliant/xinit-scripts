@@ -60,7 +60,7 @@ bash $HOME/.conky/conky-startup.sh &
 guake --hide &
 
 # Ignore shutdown/lid/sleep if nvidia card is enabled.
-#systemd-inhibit --what=handle-lid-switch  $HOME/.util/nvidia-inhibit &
+systemd-inhibit --what=handle-lid-switch  $HOME/.util/nvidia-inhibit &
 
 # Get Pulseaudio to enable beeps
 if [[ -n $LAIN_SOUNDS ]]; then
@@ -69,4 +69,5 @@ if [[ -n $LAIN_SOUNDS ]]; then
 fi
 
 # Set the M570/M575 trackball sensitivity to my liking.
+# NOTE: This causes trouble for Barrier/Synergy.
 bash $HOME/.dotfiles/xinit/m570
