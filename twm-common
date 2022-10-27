@@ -12,6 +12,7 @@ xsetroot -cursor_name left_ptr
 # Setup synaptic touchpads
 syndaemon PalmDetect=1 PalmMinWidth=5 -i 0.60 &
 synclient ClickTime=100
+
 # higher sensitivity
 synclient FingerLow=9 FingerHigh=12
 # 2 fingers scroll
@@ -67,6 +68,12 @@ if [[ -n $LAIN_SOUNDS ]]; then
     pactl upload-sample $HOME/.sounds/smw_yoshi_tongue.wav x11-bell
     pactl load-module module-x11-bell sample=x11-bell display=$DISPLAY
 fi
+
+# Set the wallpaper from last session.
+$HOME/bin/nextbg --set
+
+# Turn on the TearFree option on all connected displays.
+$HOME/bin/connected-displays | xargs -I {} xrandr --output {} --set TearFree on
 
 # Set the M570/M575 trackball sensitivity to my liking.
 # NOTE: This causes trouble for Barrier/Synergy.
