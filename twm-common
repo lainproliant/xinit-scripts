@@ -75,6 +75,9 @@ $HOME/bin/nextbg --set
 # Turn on the TearFree option on all connected displays.
 $HOME/bin/connected-displays | xargs -I {} xrandr --output {} --set TearFree on
 
+# Custom scroll wheel speeds for different programs.
+imwheel &
+
 # Set the M570/M575 trackball sensitivity to my liking.
 # NOTE: This causes trouble for Barrier/Synergy.
 bash $HOME/.dotfiles/xinit/m570

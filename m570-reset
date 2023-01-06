@@ -1,0 +1,13 @@
+#!/bin/bash
+
+device_id=`xinput list | grep -i M57 | awk -F= '{ print $2 }'| awk '{ print $1 }'| awk 'BEGIN{ RS = "" ; FS = "\n"  } { print $1 }'`
+
+if [ -z "$device_id" ]; then
+    echo "Trackball not found.";
+    exit 1;
+fi
+
+xinput set-prop $device_id "libinput Middle Emulation Enabled" 0
+xinput set-prop $device_id "libinput Scroll Method Enabled" 0, 0, 1
+xinput set-prop $device_id "libinput Accel Speed" 1
+xinput set-prop $device_id "Coordinate Transformation Matrix" 1 0 0 0 1 0 0 0 1
