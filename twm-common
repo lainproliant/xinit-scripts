@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------
 
 # Restore the desktop wallpaper
-bash $HOME/.dotfiles/xinit/util/restore-desktop
+bash $HOME/.xinit/util/restore-desktop
 
 # Make left_ptr the default cursor.
 xsetroot -cursor_name left_ptr
