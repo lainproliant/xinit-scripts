@@ -1,0 +1,10 @@
+#!/bin/bash
+#-------------------------------------------------------------------
+# XRandR Display Initialization
+#-------------------------------------------------------------------
+OTHER_DISPLAY=`xrandr | grep -v disconnected | grep connected | grep -v eDP-1 | awk '{print $1}'`
+if [[ ! -z "$OTHER_DISPLAY" ]]; then
+    echo "Other display is $OTHER_DISPLAY"
+fi
+
+xrandr --verbose --output eDP-1 --mode "1920x1200" --output $OTHER_DISPLAY --mode "2560x1440" --rate 59.95 --primary --above eDP-1 || xrandr --verbose --output eDP-1 --mode "3072x1920"

@@ -69,9 +69,6 @@ if [[ -n $LAIN_SOUNDS ]]; then
     pactl load-module module-x11-bell sample=x11-bell display=$DISPLAY
 fi
 
-# Set the wallpaper from last session.
-$HOME/bin/nextbg --set
-
 # Turn on the TearFree option on all connected displays.
 $HOME/bin/connected-displays | xargs -I {} xrandr --output {} --set TearFree on
 
@@ -84,3 +81,10 @@ imwheel &
 
 # Autolock with xss-lock
 xss-lock ~/.util/lock &
+#bash $HOME/.xinit/m570
+
+# Set the screen resolution.
+bash $HOME/.xinit/display
+
+# Set the wallpaper from last session.
+$HOME/bin/nextbg --set
