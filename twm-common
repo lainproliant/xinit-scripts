@@ -3,8 +3,11 @@
 # X initialization common to all TWMs and other desktop-less WMs.
 #-------------------------------------------------------------------
 
-# Restore the desktop wallpaper
-bash $HOME/.xinit/util/restore-desktop
+# Set the screen resolution.
+bash $HOME/.xinit/util/display
+
+# Set the wallpaper from last session.
+$HOME/bin/nextbg --set
 
 # Make left_ptr the default cursor.
 xsetroot -cursor_name left_ptr
@@ -35,6 +38,9 @@ fixdisplay
 
 # Adjust mouse sensitivity
 xset mouse 1 1
+
+# Set the cursor theme before loading xrdb
+$HOME/.xinit/util/set-cursor-theme "Breeze_Hacked_Red" 192
 
 # Merge .Xdefaults into xrdb
 xrdb -merge $HOME/.Xdefaults
@@ -77,14 +83,7 @@ imwheel &
 
 # Set the M570/M575 trackball sensitivity to my liking.
 # NOTE: This causes trouble for Barrier/Synergy.
-# bash $HOME/.dotfiles/xinit/m570
+# bash $HOME/.dotfiles/xinit/util/m570
 
 # Autolock with xss-lock
 xss-lock ~/.util/lock &
-#bash $HOME/.xinit/m570
-
-# Set the screen resolution.
-bash $HOME/.xinit/display
-
-# Set the wallpaper from last session.
-$HOME/bin/nextbg --set

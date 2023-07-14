@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# qtile - xinitrc init for qtile wm
+#
+# Author: Lain Musgrove (lain.musgrove@gmail.com)
+# Date: Friday July 14, 2023
+#
+~/.xinit/twm-common
+qtile start

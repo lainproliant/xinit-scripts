@@ -1,0 +1,89 @@
+#!/bin/bash
+#
+# set-cursor-theme - update the cursor theme in Xorg and GTK3+
+#
+# Author: Lain Musgrove (lain.musgrove@gmail.com)
+# Date: Friday July 14, 2023
+#
+
+theme=$1
+size=$2
+
+if [ -z "$theme" ]; then
+    echo "Missing theme and size."
+    exit 1
+fi
+
+if [ -z "$size" ]; then
+    echo "Missing size."
+    exit 1
+fi
+
+
+function update_gtk_settings() {
+    file=$1
+
+    if [ -f "$file" ]; then
+        if grep "gtk-cursor-theme-name=" "$file" >> /dev/null; then
+            sed -i "s/^gtk-cursor-theme-name=.*\$/gtk-cursor-theme-name=$theme/" "$file"
+        else
+            cat "gtk-cursor-theme-name=$theme" >> "$file"
+        fi
+
+        if grep "gtk-cursor-theme-size=" "$file" >> /dev/null; then
+            sed -i "s/^gtk-cursor-theme-size=.*\$/gtk-cursor-theme-size=$size/" "$file"
+        else
+            cat "gtk-cursor-theme-size=$size" >> "$file"
+        fi
+    else
+        cat "[Settings]" >> "$file"
+        cat "gtk-cursor-theme-name=$theme" >> "$file"
+    fi
+}
+
+function update_xresources() {
+    file=$1
+
+    if [ -f "$file" ]; then
+        if grep "Xcursor.theme:" "$file" >> /dev/null; then
+            sed -i "s/^Xcursor.theme:.*\$/Xcursor.theme: $theme/" "$file"
+        else
+            echo "Xcursor.theme: $theme" >> "$file"
+        fi
+
+        if grep "Xcursor.size:" "$file" >> /dev/null; then
+            sed -i "s/^Xcursor.size:.*\$/Xcursor.size: $size/" "$file"
+        else
+            echo "Xcursor.size: $size" >> "$file"
+        fi
+
+    else
+        echo "Xcursor.theme: $theme" >> "$file"
+        echo "Xcursor.size: $size" >> "$file"
+    fi
+
+}
+
+function update_default_cursor() {
+    file="$HOME/.icons/default/index.theme"
+
+    if [ -f "$file" ]; then
+        if grep "Inherits=" "$file" >> /dev/null; then
+            sed -i "s/^Inherits=.*\$/Inherits=$theme/" "$file"
+        else
+            cat "Inherits=${theme}" >> "$file"
+        fi
+
+    else
+        cat "[Icon Theme]" >> "$file"
+        cat "Name=Default" >> "$file"
+        cat "Comment=Default Cursor Theme" >> "$file"
+        cat "Inherits=${theme}" >> "$file"
+    fi
+}
+
+update_xresources ~/.Xdefaults
+update_xresources ~/.Xresources
+update_gtk_settings ~/.config/gtk-3.0/settings.ini
+update_gtk_settings ~/.config/gtk-4.0/settings.ini
+update_default_cursor
