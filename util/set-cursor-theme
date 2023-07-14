@@ -27,17 +27,17 @@ function update_gtk_settings() {
         if grep "gtk-cursor-theme-name=" "$file" >> /dev/null; then
             sed -i "s/^gtk-cursor-theme-name=.*\$/gtk-cursor-theme-name=$theme/" "$file"
         else
-            cat "gtk-cursor-theme-name=$theme" >> "$file"
+            echo "gtk-cursor-theme-name=$theme" >> "$file"
         fi
 
         if grep "gtk-cursor-theme-size=" "$file" >> /dev/null; then
             sed -i "s/^gtk-cursor-theme-size=.*\$/gtk-cursor-theme-size=$size/" "$file"
         else
-            cat "gtk-cursor-theme-size=$size" >> "$file"
+            echo "gtk-cursor-theme-size=$size" >> "$file"
         fi
     else
-        cat "[Settings]" >> "$file"
-        cat "gtk-cursor-theme-name=$theme" >> "$file"
+        echo "[Settings]" >> "$file"
+        echo "gtk-cursor-theme-name=$theme" >> "$file"
     fi
 }
 
@@ -71,19 +71,20 @@ function update_default_cursor() {
         if grep "Inherits=" "$file" >> /dev/null; then
             sed -i "s/^Inherits=.*\$/Inherits=$theme/" "$file"
         else
-            cat "Inherits=${theme}" >> "$file"
+            echo "Inherits=${theme}" >> "$file"
         fi
 
     else
-        cat "[Icon Theme]" >> "$file"
-        cat "Name=Default" >> "$file"
-        cat "Comment=Default Cursor Theme" >> "$file"
-        cat "Inherits=${theme}" >> "$file"
+        echo "[Icon Theme]" >> "$file"
+        echo "Name=Default" >> "$file"
+        echo "Comment=Default Cursor Theme" >> "$file"
+        echo "Inherits=${theme}" >> "$file"
     fi
 }
 
 update_xresources ~/.Xdefaults
 update_xresources ~/.Xresources
+update_gtk_settings ~/.config/gtk-2.0/settings.ini
 update_gtk_settings ~/.config/gtk-3.0/settings.ini
 update_gtk_settings ~/.config/gtk-4.0/settings.ini
 update_default_cursor
