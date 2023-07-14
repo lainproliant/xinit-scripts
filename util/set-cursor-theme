@@ -21,7 +21,9 @@ fi
 
 
 function update_gtk_settings() {
-    file=$1
+    config_dir=$1
+    file="$config_dir/settings.ini"
+    mkdir -p "$config_dir"
 
     if [ -f "$file" ]; then
         if grep "gtk-cursor-theme-name=" "$file" >> /dev/null; then
@@ -84,7 +86,7 @@ function update_default_cursor() {
 
 update_xresources ~/.Xdefaults
 update_xresources ~/.Xresources
-update_gtk_settings ~/.config/gtk-2.0/settings.ini
-update_gtk_settings ~/.config/gtk-3.0/settings.ini
-update_gtk_settings ~/.config/gtk-4.0/settings.ini
+update_gtk_settings ~/.config/gtk-2.0
+update_gtk_settings ~/.config/gtk-3.0
+update_gtk_settings ~/.config/gtk-4.0
 update_default_cursor
