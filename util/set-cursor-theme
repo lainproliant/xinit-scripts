@@ -19,8 +19,16 @@ if [ -z "$size" ]; then
     exit 1
 fi
 
+function update_kde() {
+    kwriteconfig5 --file ~/.config/kdeglobals --group "Icons" --key "Theme" "$theme"
+}
 
-function update_gtk_settings() {
+function update_gnome() {
+    gsettings set org.gnome.desktop.interface cursor-theme "$theme"
+    gsettings set org.gnome.desktop.interface cursor-size "$size"
+}
+
+function update_gtk() {
     config_dir=$1
     file="$config_dir/settings.ini"
     mkdir -p "$config_dir"
@@ -84,9 +92,11 @@ function update_default_cursor() {
     fi
 }
 
+update_default_cursor
 update_xresources ~/.Xdefaults
 update_xresources ~/.Xresources
-update_gtk_settings ~/.config/gtk-2.0
-update_gtk_settings ~/.config/gtk-3.0
-update_gtk_settings ~/.config/gtk-4.0
-update_default_cursor
+update_gtk ~/.config/gtk-2.0
+update_gtk ~/.config/gtk-3.0
+update_gtk ~/.config/gtk-4.0
+update_gnome
+update_kde
