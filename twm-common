@@ -28,6 +28,7 @@ synclient FastTaps=1 MaxDoubleTapTime=100
 synclient EdgeMotionMinZ=30 EdgeMotionMaxZ=40 EdgeMotionMinSpeed=100 EdgeMotionMaxSpeed=400
 
 # Fuck Capslock
+xmodmap -e "remove lock = Caps_Lock"
 setxkbmap -option caps:none
 
 # Hide the mouse cursor when it is not needed.
@@ -52,7 +53,7 @@ xcompmgr &
 xset s off -dpms
 
 # Set an idle timer to lock the screen
-#bash -c 'sleep 5; xautolock -time 1 -locker "/home/lainproliant/.util/lock"' &
+bash -c 'sleep 5; xautolock -time 15 -locker "/home/lainproliant/.util/lock"' &
 
 # Start notifyd
 systemctl --user start xfce4-notifyd
